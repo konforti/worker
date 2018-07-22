@@ -1,0 +1,30 @@
+{
+    "name": "worker",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "scripts": {
+        "prepare": "rollup -c",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/konforti/worker.git"
+    },
+    "keywords": [
+        "process",
+        "thread",
+        "worker",
+        "web worker"
+    ],
+    "author": "Raz Konforti <konforti@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/konforti/worker/issues"
+    },
+    "homepage": "https://github.com/konforti/worker#readme",
+    "devDependencies": {
+        "prettier": "^1.13.7",
+        "rollup": "^0.63.4"
+    }
+}
