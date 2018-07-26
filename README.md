@@ -39,7 +39,7 @@ function fibonacci(num) {
 }
 
 const fibInWorker = worker(fibonacci);
-fibInWorker(33).then(res => console.log(res));
+fibInWorker(3333).then(res => console.log(res));
 ```
 
 ```js
@@ -58,6 +58,19 @@ const doSomething = callback => `First we'll take Manhattan, ${callback()}`;
 const doNext = () => "Then we'll take Berlin.";
 const justDoIt = worker(doSomething);
 justDoIt(doNext).then(res => console.log(res));
+```
+
+```js
+import mathModule from './math.js';
+
+const runInWorker = (sum, times) => {
+    const a = sum(2, 3);
+    const b = times(2, 3);
+    return sum(a, b);
+};
+
+const run = worker(runInWorker);
+run(mathModule.sum, mathModule.times).then(res => console.log(res));
 ```
 
 ## Limitations
