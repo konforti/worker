@@ -17,7 +17,7 @@ export default fn => {
                     : arg;
             });
 
-            const run = async () => {
+            (async () => {
                 try {
                     let result = self.$exec(...args);
 
@@ -36,9 +36,7 @@ export default fn => {
                         result: err,
                     });
                 }
-            };
-
-            run();
+            })();
         }}`
     );
 

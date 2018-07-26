@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<body>
+    <script type="module">
+        import worker from 'http://localhost:5000/index.js';
+        import mathModule from './math.js';
+
+        const runInWorker = (sum, times) => {
+            const a = sum(2, 3);
+            const b = times(2, 3)
+            return sum(a, b)
+        };
+
+        const run = worker(runInWorker);
+        run(mathModule.sum, mathModule.times).then(res => console.log(res));
+    </script>
+</body>
+
+</html>
