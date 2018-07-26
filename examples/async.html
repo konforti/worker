@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<body>
+    <script type="module">
+        import worker from 'http://localhost:5000/index.js';
+
+        const getRepos = worker(async username => {
+            const url = `https://api.github.com/users/${username}/repos`;
+            const res = await fetch(url);
+            const repos = await res.json();
+            return repos.map(r => r.full_name);
+        });
+
+        getRepos('konforti').then(res => console.log(res));
+    </script>
+</body>
+
+</html>

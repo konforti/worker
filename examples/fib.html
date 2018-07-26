@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<body>
+    <script type="module">
+        import worker from 'http://localhost:5000/index.js';
+
+        function fibonacci(num) {
+            let a = 1;
+            let b = 0;
+            let temp;
+            while (num >= 0) {
+                temp = a;
+                a = a + b;
+                b = temp;
+                num--;
+            }
+            return b;
+        }
+
+        const fibInWorker = worker(fibonacci);
+        fibInWorker(33).then(res => console.log(res));
+    </script>
+</body>
+
+</html>

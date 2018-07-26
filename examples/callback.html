@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<body>
+    <script type="module">
+        import worker from 'http://localhost:5000/index.js';
+
+        const doSomething = (callback) =>
+            `First we'll take Manhattan, ${callback()}`
+
+        const doNext = () => "Then we'll take Berlin.";
+
+
+        const justDoIt = worker(doSomething);
+        justDoIt(doNext).then(res => console.log(res));
+    </script>
+</body>
+
+</html>
