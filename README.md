@@ -2,17 +2,15 @@
 
 > Move a function into a web worker.
 
-> Support async function, arrow function or regular function.
+> Supports async function.
 
-> Function params can be any serialize type or a function.
+> Function params can be any serializable type or a function.
 
 ## Installation
 
 ```bash
     npm i -S @konforti/worker
 ```
-
-or
 
 ```bash
     yarn add @konforti/worker
@@ -25,6 +23,8 @@ import worker from '@konforti/worker';
 ```
 
 ```js
+// Function in worker
+
 function fibonacci(num) {
     let a = 1;
     let b = 0;
@@ -43,6 +43,8 @@ fibInWorker(3333).then(res => console.log(res));
 ```
 
 ```js
+// Async function in worker
+
 const getRepos = worker(async username => {
     const url = `https://api.github.com/users/${username}/repos`;
     const res = await fetch(url);
@@ -54,6 +56,8 @@ getRepos('konforti').then(res => console.log(res));
 ```
 
 ```js
+// Pass a callback function as argument
+
 const doSomething = callback => `First we'll take Manhattan, ${callback()}`;
 const doNext = () => "Then we'll take Berlin.";
 const justDoIt = worker(doSomething);
@@ -61,6 +65,8 @@ justDoIt(doNext).then(res => console.log(res));
 ```
 
 ```js
+// Inject imported function into worker scope
+
 import mathModule from './math.js';
 
 const runInWorker = (sum, times) => {
