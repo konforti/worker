@@ -1,12 +1,22 @@
-# worker
+<!-- <div align="center">
+  <img
+  width="1000"
+  src="examples/worker.png" alt="worker">
+</div> -->
 
-> Move a function into a web worker.
+# ⚙️ Worker
 
-> Supports async function.
+## ✨ Features:
 
-> Function params can be any serializable type or a function.
+-   Move a function into a web worker.
+-   Supports async function.
+-   Passing any [structured clone types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#Supported_types.).
+-   Accept **functions** as arguments.
+-   Optimize [Transferable](https://developer.mozilla.org/en-US/docs/Web/API/Transferable) arguments types.
 
-## Installation
+See [Non blocking example](https://codesandbox.io/s/k54w4m9pz7)
+
+## 🔧 Installation
 
 ```bash
     npm i -S @konforti/worker
@@ -16,52 +26,44 @@
     yarn add @konforti/worker
 ```
 
-## Usage
+## ✏️ Usage
 
 ```js
 import worker from '@konforti/worker';
 ```
 
+## 🔦 Usage examples
+
 ```js
 // Function in worker
 
 function fibonacci(num) {
-    let a = 1;
-    let b = 0;
-    let temp;
-    while (num >= 0) {
-        temp = a;
-        a = a + b;
-        b = temp;
-        num--;
-    }
-    return b;
+    return fibonacci(num - 1) + fibonacci(num - 2);
 }
 
-const fibInWorker = worker(fibonacci);
-fibInWorker(3333).then(res => console.log(res));
+const run = worker(fibonacci);
+run(333).then(res => console.log(res));
 ```
 
 ```js
 // Async function in worker
 
-const getRepos = worker(async username => {
+const run = worker(async username => {
     const url = `https://api.github.com/users/${username}/repos`;
     const res = await fetch(url);
     const repos = await res.json();
     return repos.map(r => r.full_name);
 });
 
-getRepos('konforti').then(res => console.log(res));
+run('konforti').then(res => console.log(res));
 ```
 
 ```js
 // Pass a callback function as argument
 
-const doSomething = callback => `First we'll take Manhattan, ${callback()}`;
-const doNext = () => "Then we'll take Berlin.";
-const justDoIt = worker(doSomething);
-justDoIt(doNext).then(res => console.log(res));
+const fn = callback => `First we take Manhattan, ${callback()}`;
+const run = worker(fn);
+run(() => 'Then we take Berlin.').then(res => console.log(res));
 ```
 
 ```js
@@ -69,16 +71,16 @@ justDoIt(doNext).then(res => console.log(res));
 
 import mathModule from './math.js';
 
-const runInWorker = (sum, times) => {
+const calc = (sum, times) => {
     const a = sum(2, 3);
-    const b = times(2, 3);
+    const b = times(4, 5);
     return sum(a, b);
 };
 
-const run = worker(runInWorker);
+const run = worker(calc);
 run(mathModule.sum, mathModule.times).then(res => console.log(res));
 ```
 
-## Limitations
+## 🔏 Limitations
 
 The function and any argument passes cannot rely on its surrounding scope, since it is executed in an isolated context.

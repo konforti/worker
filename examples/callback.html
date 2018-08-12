@@ -5,9 +5,9 @@
         import worker from 'http://localhost:5000/index.js';
 
         const doSomething = (callback) =>
-            `First we'll take Manhattan, ${callback()}`
+            `First we take Manhattan, ${callback()}`
 
-        const doNext = () => "Then we'll take Berlin.";
+        const doNext = () => "Then we take Berlin.";
 
 
         const justDoIt = worker(doSomething);
