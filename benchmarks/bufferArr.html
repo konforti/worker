@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<body>
+    <script>
+        function transferByLine(line, transferable) {
+            var arr = [];
+            var bufferArr = [];
+            for (var i = 0; i < line; i++) {
+                arr[i] = new Uint8Array(100000);
+                if (transferable) {
+                    bufferArr.push(arr[i].buffer);
+                }
+            }
+            var startTime = new Date().getTime();
+            if (!transferable) {
+                self.postMessage(arr, "*");
+            } else {
+                self.postMessage(arr, "*", bufferArr);
+            }
+            var timeTaken = new Date().getTime() - startTime;
+            var t = transferable ? "transferable" : "copy"
+            console.log(t + " completed in " + timeTaken + "ms.");
+        }
+
+        transferByLine(1000, false);
+        // transferByLine(1000000, true);
+
+    </script>
+</body>
+
+</html>

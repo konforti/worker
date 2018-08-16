@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<body>
+    <script>
+        function transferByLine(line, transferable) {
+            var channel = new MessageChannel();
+            var arr = [];
+            for (var i = 0; i < line; i++) {
+                arr[i] = new Uint8Array(100000);
+            }
+            var startTime = new Date().getTime();
+            if (!transferable) {
+                self.postMessage(arr, "*");
+            } else {
+                self.postMessage(arr, "*", [channel.port2]);
+            }
+            var timeTaken = new Date().getTime() - startTime;
+            var t = transferable ? "transferable" : "copy"
+            console.log(t + " completed in " + timeTaken + "ms.");
+        }
+
+        transferByLine(1000, false);
+        transferByLine(1000, true);
+
+    </script>
+</body>
+
+</html>

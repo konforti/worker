@@ -8,8 +8,8 @@
             return n > 1 ? fibo(n - 1) + fibo(n - 2) : 1;
         }
 
-        const run = worker(fibonacci);
-        run(333).then(res => console.log(res));
+        const run = worker(fibo);
+        run(33).then(res => console.log(res));
     </script>
 </body>
 
