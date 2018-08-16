@@ -47,13 +47,6 @@ export default fn => {
                 : arg;
         });
 
-        const transferable = args.filter(
-            arg =>
-                arg instanceof ArrayBuffer ||
-                arg instanceof MessagePort ||
-                arg instanceof ImageBitmap
-        );
-
         return new Promise((resolve, reject) => {
             worker.onmessage = e => {
                 promises[e.data.id][e.data.promise](e.data.result);
@@ -61,7 +54,7 @@ export default fn => {
             };
 
             promises[++id] = { resolve, reject };
-            worker.postMessage({ id, args }, transferable);
+            worker.postMessage({ id, args });
         });
     };
 };

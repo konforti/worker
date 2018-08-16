@@ -4,21 +4,12 @@
     <script type="module">
         import worker from 'http://localhost:5000/index.js';
 
-        function fibonacci(num) {
-            let a = 1;
-            let b = 0;
-            let temp;
-            while (num >= 0) {
-                temp = a;
-                a = a + b;
-                b = temp;
-                num--;
-            }
-            return b;
+        function fibo(n) {
+            return n > 1 ? fibo(n - 1) + fibo(n - 2) : 1;
         }
 
-        const fibInWorker = worker(fibonacci);
-        fibInWorker(33).then(res => console.log(res));
+        const run = worker(fibonacci);
+        run(333).then(res => console.log(res));
     </script>
 </body>
 

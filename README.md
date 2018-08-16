@@ -12,7 +12,6 @@
 -   Supports async function.
 -   Passing any [structured clone types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#Supported_types.).
 -   Accept **functions** as arguments.
--   Optimize [Transferable](https://developer.mozilla.org/en-US/docs/Web/API/Transferable) arguments types.
 
 See [Non blocking example](https://codesandbox.io/s/k54w4m9pz7)
 
@@ -37,11 +36,11 @@ import worker from '@konforti/worker';
 ```js
 // Function in worker
 
-function fibonacci(num) {
-    return fibonacci(num - 1) + fibonacci(num - 2);
+function fibo(n) {
+    return n > 1 ? fibo(n - 1) + fibo(n - 2) : 1;
 }
 
-const run = worker(fibonacci);
+const run = worker(fibo);
 run(333).then(res => console.log(res));
 ```
 

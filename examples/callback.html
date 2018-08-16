@@ -4,14 +4,9 @@
     <script type="module">
         import worker from 'http://localhost:5000/index.js';
 
-        const doSomething = (callback) =>
-            `First we take Manhattan, ${callback()}`
-
-        const doNext = () => "Then we take Berlin.";
-
-
-        const justDoIt = worker(doSomething);
-        justDoIt(doNext).then(res => console.log(res));
+        const fn = callback => `First we take Manhattan, ${callback()}`;
+        const run = worker(fn);
+        run(() => 'Then we take Berlin.').then(res => console.log(res));
     </script>
 </body>
 
