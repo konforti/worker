@@ -10,10 +10,10 @@
 
 -   Move a function into a web worker.
 -   Supports async function.
--   Passing any [structured clone types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#Supported_types.).
+-   Accept any [structured clone types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#Supported_types.) as arguments.
 -   Accept **functions** as arguments.
 
-See [Non blocking example](https://codesandbox.io/s/k54w4m9pz7)
+See [Non blocking example](https://codesandbox.io/s/8x82oz2vz2)
 
 ## 🔧 Installation
 
