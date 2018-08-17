@@ -1,6 +1,7 @@
 export default fn => {
     let id = 0;
     const promises = {};
+    const channel = new MessageChannel();
 
     const worker = new Worker(
         `data:,$exec=${fn};onmessage=${e => {
@@ -28,9 +29,13 @@ export default fn => {
                     ) {
                         result = await result;
                     }
-                    postMessage({ id: e.data.id, promise: 'resolve', result });
+                    e.ports[0].postMessage({
+                        id: e.data.id,
+                        promise: 'resolve',
+                        result,
+                    });
                 } catch (err) {
-                    postMessage({
+                    e.ports[0].postMessage({
                         id: e.data.id,
                         promise: 'reject',
                         result: err,
@@ -48,13 +53,13 @@ export default fn => {
         });
 
         return new Promise((resolve, reject) => {
-            worker.onmessage = e => {
+            channel.port1.onmessage = e => {
                 promises[e.data.id][e.data.promise](e.data.result);
                 promises[e.data.id] = null;
             };
 
             promises[++id] = { resolve, reject };
-            worker.postMessage({ id, args });
+            worker.postMessage({ id, args }, [channel.port2]);
         });
     };
 };
